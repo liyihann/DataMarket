@@ -1,0 +1,245 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-width: 600px;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+    </style>
+    <link href="css/head.css" type="text/css" rel="stylesheet">
+    <link href="css/home-page.css" type="text/css" rel="stylesheet">
+    <link href="css/about.css" type="text/css" rel="stylesheet">
+    <link href="css/introduce.css" type="text/css" rel="stylesheet">
+    <link href="css/bottom.css" type="text/css" rel="stylesheet">
+    <title>
+        there is title
+    </title>
+</head>
+<body>
+<script src="./js/JQuery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.post("getProfileSrc", {} , function (data) {
+            if (data != "") {
+                $("#profile").attr("src",  data);
+                $(".home-page-sign-in-up").css("display", "none");
+                $("#profile").click(function () {
+                    location.href="UserServlet"
+                });
+            } else {
+                $("#profile").click(function () {
+                    $(".sign-container").css("display", "block");
+                    $("#background-window").show();
+                });
+            }
+        });
+        content = $("#head-select-item-search-content");
+        $("#head-select-item-search-content").bind('keypress', function(e) {
+            if (e.keyCode == 13) {
+                alert("搜索" + content.val());
+            }
+        });
+        $(".head-select-item").mouseover(function(e) {
+            if (e.target.id != "head-select-item-search-content") {
+                $(e.target).css("color", "rgb(255, 127, 0)");
+            }
+        });
+        $(".head-select-item").mouseout(function(e) {
+            if (e.target.id != "head-select-item-search-content") {
+                $(e.target).css("color", "white");
+            }
+        });
+        $("#head-select-item-search-icon").click(function(e) {
+            if ("none" == content.css("display")) {
+                content.css("display", "block");
+                content.animate({
+                    width: "200px"
+                }, "slow");
+            } else {
+                content.val("");
+                content.animate({
+                    width: "0"
+                }, "slow", function() {
+                    content.css("display", "none");
+                });
+            }
+        });
+        sign_up_exchange=$("#sign-up");
+        sign_up_exchange.hover(function(){
+            sign_up_exchange.css("color","rgba(46, 130, 255, 0.5)");
+        }, function() {
+            sign_up_exchange.css("color","#2e82ff");
+        });
+        sign_up_exchange.click(function(e) {
+            if (sign_up_exchange.text()=="登录") {
+                sign_up_exchange.text("注册");
+                $("#make-sure").val("登录");
+            } else {
+                sign_up_exchange.text("登录");
+                $("#make-sure").val("注册");
+            }
+        });
+        $("#sign-in-or-up").click(function(e) {
+            $(".sign-container").css("display", "block");
+            $("#background-window").show();
+        });
+        $("#flow-close").click(function(e) {
+            $(".sign-container").css("display", "none");
+            $("#background-window").hide();
+        });
+        flow_close=$("#flow-close");
+        flow_close.hover(function(){
+            flow_close.attr("src", "img/close-hover.png");
+        }, function() {
+            flow_close.attr("src", "img/close.png");
+        });
+        $("#make-sure").click(function () {
+            if ($("#make-sure").val()=="登录") {
+                $.post("Login",
+                    {
+                        account:$("#account").val(),
+                        password:$("#password").val()
+                    },
+                    function (data) {
+                        if (data == "success") {
+                            location.reload();
+                        } else {
+                            $("#wrong-password").text("用户名或密码错误");
+                            $("#wrong-password").css("display", "block");
+                        }
+                    }, "text"
+                );
+            } else {
+                if ($("#password").val().length < 5 || $("#account").val().length < 5) {
+                    $("#wrong-password").text("用户名或者密码太短了");
+                    $("#wrong-password").css("display", "block");
+                    return;
+                }
+                $.post("Register",
+                    {
+                        account:$("#account").val(),
+                        password:$("#password").val()
+                    },
+                    function (data) {
+                        if (data == "success") {
+                            alert("注册成功");
+                            location.reload();
+                        } else {
+                            $("#wrong-password").text("该用户名已存在");
+                            $("#wrong-password").css("display", "block");
+                        }
+                    }, "text"
+                );
+            }
+        });
+        $("#head-select-index").click(function() {
+            location.href="index.html";
+        });
+        $("#head-select-requirement").click(function() {
+            location.href="RequestServlet";
+        });
+        $("#head-select-service").click(function() {
+            location.href="feedback.jsp";
+        });
+    });
+</script>
+<div class="head-container">
+    <div class="head-logo" >
+        <img src="img/logo.png" >
+    </div>
+
+    <div class="head-select">
+        <p class="head-select-item" id="head-select-index">
+            首页
+        </p>
+        <p class="head-select-item" id="head-select-requirement">
+            需求
+        </p>
+        <p class="head-select-item" id="head-select-service">
+            客服
+        </p>
+
+        <input class="head-select-item" id="head-select-item-search-content" type="text" placeholder="123">
+
+        <img class="head-select-item" id="head-select-item-search-icon" src="img/search.png">
+
+    </div>
+    <div class="head-profile">
+        <img id="profile" src="img/profile.png">
+    </div>
+</div>
+<div class="home-page">
+    <div class="home-page-sign-in-up">
+        <p id="sign-in-or-up" >登录&nbsp;/&nbsp;注册</p>
+    </div>
+</div>
+<div class="sign-container" >
+    <div style="display: flex; align-items: center">
+        <img src="img/logo.png" style="width: 50px;height: 30px;">
+        <p style="display: inline;margin: 0 0 0 5px;font-size:20px;">·</p>
+        <p style="display: inline;margin: 0 0 0 5px;font-size: 20px">用户名密码登录</p>
+    </div>
+    <div>
+        <form id="flow-sign" action="Login" method="post">
+            <input class="sign-form-input" type="text" id="account" name="account" placeholder="请输入用户名"/>
+            <input class="sign-form-input" type="password" id="password" name="password" placeholder="请输入密码"/>
+            <input class="sign-form-input" id="make-sure"  type="button" value="登录"/>
+        </form>
+    </div>
+
+    <img id="flow-close" src="img/close.png"/>
+    <p id="wrong-password">用户名或密码错误</p>
+    <p id="sign-up">注册</p>
+</div>
+
+<div id="background-window"></div>
+<div class="about-container">
+    <div class="about-title">
+        <h1 class="about-title">我们的服务</h1>
+    </div>
+    <div class="about-select">
+        <div class="about-select-item">
+            <img class="about-select-item" src="img/1.png">
+            <h2 class="about-select-item-content">发布委托</h2>
+            <p class="about-select-item-content">接受你的委托，并发布到平台上</p>
+        </div>
+        <div class="about-select-item">
+            <img class="about-select-item" src="img/4.png">
+            <h2 class="about-select-item-content">接受委托</h2>
+            <p class="about-select-item-content">用户接受委托，完成任务</p>
+        </div>
+        <div class="about-select-item">
+            <img class="about-select-item" src="img/3.png">
+            <h2 class="about-select-item-content">海量资源</h2>
+            <p class="about-select-item-content">系统，全面浏览热门委托</p>
+        </div>
+        <div class="about-select-item">
+            <img class="about-select-item" src="img/2.png">
+            <h2 class="about-select-item-content">人工服务</h2>
+            <p class="about-select-item-content">特殊问题，一对一解决</p>
+        </div>
+    </div>
+</div>
+
+<div class="bottom">
+    <div class="bottom-text">Copyright © 2018.数据市场 All rights reserved.&nbsp;
+    <a href="./login.html">后台</a>
+    </div>
+</div>
+
+
+
+</body>
+</html>

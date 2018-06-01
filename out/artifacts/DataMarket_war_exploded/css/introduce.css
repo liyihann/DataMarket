@@ -1,0 +1,97 @@
+.introduce-container{
+    margin-top: 0px;
+    padding: 0;
+    position: relative;
+	width: 100%;
+	min-width: 1000px;
+	height: 800px;
+	background-color: rgba(0,0,0,0.6);
+}
+
+.introduce-title{
+	position: relative;
+	margin-top: 60px;
+	padding-right:40px;
+	padding-left:40px;
+	vertical-align:middle;
+	height: 80px;
+}
+
+
+.introduce-select{
+	top:10px;
+	position: relative;
+    padding: 0;
+    margin-top: 0px;
+	width:100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.introduce-select-item{
+	float: left;
+	clear: both;
+	margin-top: 0px;
+	box-sizing:border-box;
+    position: relative;
+	width: 400px;
+    height: 300px;
+	left:-30px;
+}
+
+.introduce-select-item-content{
+	width:300px;
+	height:220px;
+	left:10px;
+	box-sizing:border-box;
+    position: relative;
+	border:10px #ff7200;
+	z-index: 2;
+}
+
+h1.introduce-title{
+	margin-top: 40px;
+	text-align: center;
+	font-family: Microsoft YaHei, "Times New Roman", Serif, serif;
+	color: #ff7200;
+	font-size: 45px;
+}
+
+img.introduce-select-item{
+	width: 385px;
+    height: 280px;
+    background: #fff;
+	overflow: hidden;
+    text-align: center;
+    line-height: 110px;
+    position: absolute;
+}
+
+h3.introduce-select-item-content{
+	position: relative;
+	margin-top: 40px;
+	padding-top: 20px;
+	text-align: center;
+	font-family: Microsoft YaHei, "Times New Roman", Serif, serif;
+	color: white;
+	font-size: 20px;
+	height:45px;
+	background-color: rgba(0,0,0,0.6);
+	margin-bottom: 0;
+	border-left: thick #ff7200;
+}
+
+p.introduce-select-item-content{
+	position:relative;
+	padding-top: 20px;
+	text-align: center;
+	font-family: Microsoft YaHei, "Times New Roman", Serif, serif;
+	color: #ff7200;
+	font-size: 20px;
+	line-height: 40px;
+	word-wrap: break-word;
+	height:175px;
+	background-color: rgba(0,0,0,0.6);
+}
