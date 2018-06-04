@@ -48,7 +48,9 @@
         content = $("#head-select-item-search-content");
         $("#head-select-item-search-content").bind('keypress', function(e) {
             if (e.keyCode == 13) {
-                alert("搜索" + content.val());
+                var form = document.getElementById('search-form');
+                form.submit();
+                //location.href="SearchServlet";
             }
         });
         $(".head-select-item").mouseover(function(e) {
@@ -170,9 +172,9 @@
         <p class="head-select-item" id="head-select-service">
             客服
         </p>
-
-        <input class="head-select-item" id="head-select-item-search-content" type="text" placeholder="123">
-
+        <form action="SearchServlet" method="post" id="search-form">
+        <input class="head-select-item" id="head-select-item-search-content" name="search-keyword" type="text" placeholder="搜索">
+        </form>
         <img class="head-select-item" id="head-select-item-search-icon" src="img/search.png">
 
     </div>
@@ -234,7 +236,7 @@
 </div>
 
 <div class="bottom">
-    <div class="bottom-text">Copyright © 2018.数据市场 All rights reserved.&nbsp;
+    <div class="bottom-text">Copyright © 2018.数据集市 All rights reserved.&nbsp;
     <a href="./login.html">后台</a>
     </div>
 </div>

@@ -45,6 +45,7 @@
                 }, function (data) {
                     // alert(data);
                     if (data == "success") {
+                        alert('操作成功！');
                         location.reload();
                     }
                 }

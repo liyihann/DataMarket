@@ -79,7 +79,8 @@
                 content = $("#head-select-item-search-content");
                 $("#head-select-item-search-content").bind('keypress', function(e) {
                     if (e.keyCode == 13) {
-                        alert("搜索" + content.val());
+                        var form = document.getElementById('search-form');
+                        form.submit();
                     }
                 });
 				$("#head-select-item-search-icon").click(function(e) {
@@ -116,7 +117,7 @@
                     $(".body-requirement-receive").css("display", "block");
                 });
                 $("#head-select-item-index").click(function() {
-                    location.href="index.html"; 
+                    location.href="index.html";
                 });                
                 $("#head-select-item-requirement").click(function() {
                     //location.href="requirement.jsp";
@@ -187,9 +188,9 @@
                 <p class="head-select-item" id="head-select-item-service">
                     客服
                 </p>
-                
-                <input class="head-select-item" id="head-select-item-search-content" type="text" placeholder="搜索">
-                
+                 <form action="SearchServlet" method="post" id="search-form">
+                <input class="head-select-item" id="head-select-item-search-content" name="search-keyword" type="text" placeholder="搜索">
+                 </form>
                 <img class="head-select-item" id="head-select-item-search-icon" src="img/search.png">
 
             </div>
@@ -225,13 +226,13 @@
 				<div class="form-row">
 					<div class="field-label"><label>昵称:</label></div>
 					<div class="field-widget">
-                        <input name="nick-name" id="name" class="required" title="Enter your name" value="<c:out value="${user.username}" />"/>
+                        <input name="nick-name" id="name" class="required" style="font-size: large;color:white;" title="Enter your name" value="<c:out value="${user.username}" />"/>
 
                     </div>
 				</div>
 <div class="form-row">
 			  <div class="field-label"><label>个性签名:</label></div>
-					<div class="field-widget"><textarea class="required" name="message"><c:out value="${user.message}" /></textarea></div>
+					<div class="field-widget"><textarea class="required" style="font-size: large;color:white;" name="message"><c:out value="${user.message}" /></textarea></div>
 				</div>
         
         

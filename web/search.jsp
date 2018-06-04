@@ -229,32 +229,32 @@
         });
         $("#requirement-submit").click(function () {
             location.href="ReleaseServlet";
-           /*$.post("postRequirement",
-                {
-                    "requirementName": $("#body-requirement-publish-fieldset-name").val(),
-                    "requirementContent": $("#body-requirement-publish-fieldset-content").val()
-                },
-                function (data) {
-                    if (data == "success") {
-                        alert("success");
-                        location.reload();
-                    } else {
-                        alert("fail");
-                    }
-                })*/
+            /*$.post("postRequirement",
+                 {
+                     "requirementName": $("#body-requirement-publish-fieldset-name").val(),
+                     "requirementContent": $("#body-requirement-publish-fieldset-content").val()
+                 },
+                 function (data) {
+                     if (data == "success") {
+                         alert("success");
+                         location.reload();
+                     } else {
+                         alert("fail");
+                     }
+                 })*/
         });
 
         $(".body-requirement-receive-receive").click(function (e) {
             // alert(e.target.id);
             $.post(
                 "AcceptServlet",
-                    {
-                        "requirement-receive-id": e.target.id
-                    }, function (data) {
+                {
+                    "requirement-receive-id": e.target.id
+                }, function (data) {
                     // alert(data);
-                        if (data == "success") {
-                            location.reload();
-                        }
+                    if (data == "success") {
+                        location.reload();
+                    }
                 }
             );
         });
@@ -287,66 +287,29 @@
 </div>
 <div class="body-requirement">
     <div class="body-requirement-navigation">
-        <p class="body-requirement-navigation-select-item" id="receive-requirement">接受需求</p>
-        <p class="body-requirement-navigation-select-item" id="publish-requirement">发布需求</p>
+        <p class="body-requirement-navigation-select-item" id="receive-requirement">搜索结果</p>
     </div>
 
-    <div class="body-requirement-publish">
-        <form name="requestForm" method="post" action="ReleaseServlet">
-        <fieldset class="body-requirement-publish-fieldset">
-            <legend>委托内容</legend>
-            <div class="body-requirement-publish-fieldset-content-container">
-                <div class="body-requirement-publish-fieldset-name-container">
-                    <p>名称&nbsp;:&nbsp;</p>
-                    <input id="body-requirement-publish-fieldset-name" name="requirement-title">
+
+
+    <%List<Request> results = (List<Request>)request.getAttribute("results");%>
+    <div class="body-requirement-receive">
+        <c:forEach items="${requestScope.results}" var="rs">
+            <div class="body-requirement-receive-container">
+
+                <div class="body-requirement-receive-class-and-name">
+                    <label class="body-requirement-receive-class" ><c:out value="${rs.tag}" /></label><!--tag-->
+                    <label class="body-requirement-receive-name" ><c:out value="${rs.title}" /></label><!--title-->
                 </div>
-                <textarea id="body-requirement-publish-fieldset-content" name="requirement-content" placeholder="请输入详细内容"></textarea>
+
+                <p style="margin-top:20px; width: 100%;word-wrap: break-word; word-break: break-all;">
+                    <c:out value="${rs.content}" />
+                </p>
             </div>
-        </fieldset>
-        <div class="body-requirement-publish-class-container">
-            <label>分类&nbsp;:&nbsp;</label>
-            <select class="body-requirement-publish-class" id="body-requirement-publish-class" name="requirement-tag"
-                    style="width: 60px; height: 30px;">
-                <option value="科学">科学</option>
-                <option value="人文">人文</option>
-                <option value="艺术">艺术</option>
-                <option value="经济">经济</option>
-                <option value="娱乐">娱乐</option>
-                <option value="学术">学术</option>
-                <option value="其他">其他</option>
-            </select>
-        </div>
-        <button id="requirement-submit">
-            提交
-        </button>
-        </form>
+        </c:forEach>
     </div>
 
-    <%List<Request> requests = (List<Request>)request.getAttribute("requests");%>
-            <div class="body-requirement-receive">
-                <c:forEach items="${requestScope.requests}" var="r">
-                    <div class="body-requirement-receive-container">
+</div>
 
-                        <div class="body-requirement-receive-class-and-name">
-                            <label class="body-requirement-receive-class" ><c:out value="${r.tag}" /></label><!--tag-->
-                            <label class="body-requirement-receive-name" ><c:out value="${r.title}" /></label><!--title-->
-                        </div>
-
-                        <%--<form name="acceptForm" method="post" action="AcceptServlet">--%>
-
-                            <%--<textarea rows="0" cols="0" hidden="hidden" name="requirement-id"></textarea>--%>
-                            <button  class="body-requirement-receive-receive" id="${r.requestid}">领取</button><!--添加需求至数据库-->
-                            <%--</form>--%>
-
-
-                        <p style="margin-top:20px; width: 100%;word-wrap: break-word; word-break: break-all;">
-                            <c:out value="${r.content}" />
-                        </p>
-                    </div>
-                </c:forEach>
-            </div>            
-
-        </div>
-    
-    </body>
+</body>
 </html>

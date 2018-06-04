@@ -1,9 +1,6 @@
 package com.liyihan;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class LoginVerify {
 
@@ -15,8 +12,17 @@ public class LoginVerify {
         String username="",passwd="";
         String inputName = replace(s1);
         String inputPasswd = replace(s2);
-        String sql = "SELECT * FROM users WHERE username='" +inputName+"'";
-        rs = state.executeQuery(sql);
+        //String sql = "SELECT * FROM users WHERE username='" +inputName+"'";
+        //rs = state.executeQuery(sql);
+
+        //mysql存储过程
+        CallableStatement proc=null;
+        String sql2="{CALL proc_usernameverify(?)}";
+        proc=conn.prepareCall(sql2);
+        proc.setString(1, inputName);
+        proc.execute();
+        rs = proc.getResultSet();
+
         if(!rs.next()){
             isValid = false;
         }else {

@@ -348,5 +348,40 @@ public class Request {
             }
         }
     }
+
+    public List<Request> getResults(String search){
+        Connection conn = DBConnection.getConnection();
+        List<Request> list = new ArrayList<Request>();
+        String sql = "SELECT requestid,request_title,request_content,request_tagname FROM requests JOIN request_tags ON request_tagid = request_tag WHERE request_title LIKE '%"+search+"%' OR request_content LIKE '%"+search+"%' OR request_tagname LIKE '%"+search+"%';";
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while (rs.next()){
+                Request r = new Request();
+                r.setRequestid(rs.getInt("requestid"));
+                r.setTitle(rs.getString("request_title"));
+                System.out.println(r.getTitle());
+                r.setContent(rs.getString("request_content"));
+                System.out.println(r.getContent());
+                r.setTag(rs.getString("request_tagname"));
+                list.add(r);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (conn != null)
+                    conn.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+            }
+        }
+        return list;
+    }
 }
 

@@ -177,7 +177,8 @@
         content = $("#head-select-item-search-content");
         $("#head-select-item-search-content").bind('keypress', function (e) {
             if (e.keyCode == 13) {
-                alert("搜索" + content.val());
+                var form = document.getElementById('search-form');
+                form.submit();
             }
         });
         $("#head-select-item-search-icon").click(function (e) {
@@ -274,9 +275,9 @@
         <p class="head-select-item" id="head-select-item-service">
             客服
         </p>
-
-        <input class="head-select-item" id="head-select-item-search-content" type="text" placeholder="123">
-
+        <form action="SearchServlet" method="post" id="search-form">
+        <input class="head-select-item" id="head-select-item-search-content" name="search-keyword" type="text" placeholder="搜索">
+        </form>
         <img class="head-select-item" id="head-select-item-search-icon" src="img/search.png">
 
     </div>
